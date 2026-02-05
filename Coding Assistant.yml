@@ -1,0 +1,292 @@
+flowMeta:
+  name: Coding Assistant
+  description: I’m a Coding Assistant. I help developers understand requirements,
+    review code, troubleshoot issues, and provide actionable insights to build efficient
+    and reliable software.
+  avatarIcon: https://oss-beijing-m8.openstorage.cn/SparkBotProd/icon/common/emojiitem_00_10@2x.png
+  avatarColor: '#FFEAD5'
+  advancedConfig: '{"prologue":{"enabled":true,"inputExample":["","",""]},"textToSpeech":{"enabled":true,"vcn_cn":"x5_lingxiaotang_flow","vcn_en":""}}'
+  dslVersion: v1
+flowData:
+  nodes:
+  - id: node-start::d61b0f71-87ee-475e-93ba-f1607f0ce783
+    dragging: false
+    selected: false
+    width: 362
+    height: 122
+    position:
+      x: -172.7951717252273
+      y: 50.57207681667495
+    positionAbsolute:
+      x: -172.7951717252273
+      y: 50.57207681667495
+    type: custom
+    data:
+      allowInputReference: false
+      allowOutputReference: true
+      label: 开始
+      status: success
+      nodeMeta:
+        aliasName: 开始节点
+        nodeType: 基础节点
+      inputs: [
+        ]
+      outputs:
+      - id: 0918514b-72a8-4646-8dd9-ff4a8fc26d44
+        name: AGENT_USER_INPUT
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: 用户本轮对话输入内容
+        required: true
+        deleteDisabled: true
+      nodeParam: {
+        }
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/start-node-icon.png
+      description: 工作流的开启节点，用于定义流程调用所需的业务变量信息。
+      updatable: false
+  - id: node-end::cda617af-551e-462e-b3b8-3bb9a041bf88
+    dragging: false
+    selected: true
+    width: 362
+    height: 122
+    position:
+      x: 886.8833333333332
+      y: 343.91588235294114
+    positionAbsolute:
+      x: 886.8833333333332
+      y: 343.91588235294114
+    type: custom
+    data:
+      allowInputReference: true
+      allowOutputReference: false
+      label: 结束
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 结束节点
+        nodeType: 基础节点
+      inputs:
+      - id: 82de2b42-a059-4c98-bffb-b6b4800fcac9
+        name: output
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              id: 6f1ba0c4-523b-4f09-a4a7-56db0830fc27
+              nodeId: question-answer::0547efcb-e215-446d-b5b9-859caed6aa0d
+              name: query
+            contentErrMsg: ''
+        fileType: ''
+      outputs: [
+        ]
+      nodeParam:
+        template: I’m a Coding Assistant. I help developers understand requirements,
+          review code, troubleshoot issues, and provide actionable insights to build
+          efficient and reliable software.
+        streamOutput: true
+        outputMode: 1
+        templateErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/end-node-icon.png
+      description: 工作流的结束节点，用于输出工作流运行后的最终结果。
+      updatable: false
+  - id: ifly-code::44b937f4-d6cb-476a-81b9-b6015a6e8cff
+    dragging: false
+    selected: false
+    width: 362
+    height: 108
+    position:
+      x: -156.05517568849228
+      y: 333.43556943491353
+    positionAbsolute:
+      x: -156.05517568849228
+      y: 333.43556943491353
+    type: custom
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: Code_1
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        nodeType: 工具
+        aliasName: 代码
+      inputs:
+      - id: 3d60d11b-fb23-47f1-ad35-516aefeeae68
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: string
+          value:
+            type: ref
+            content:
+              id: 0918514b-72a8-4646-8dd9-ff4a8fc26d44
+              nodeId: node-start::d61b0f71-87ee-475e-93ba-f1607f0ce783
+              name: AGENT_USER_INPUT
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 658d6d7e-d55a-49bb-b660-739e56453a98
+        name: key0
+        nameErrMsg: ''
+        schema:
+          type: string
+          default: ''
+      - id: f7c76b87-7b6c-4de5-b1e0-9e6905665fe3
+        name: key1
+        nameErrMsg: ''
+        schema:
+          type: array-string
+          default: ''
+      - id: f7037b7d-a603-4b95-949d-b5e586290c4b
+        name: key2
+        nameErrMsg: ''
+        schema:
+          type: object
+          properties:
+          - id: 47c728b0-5279-4cf3-ab4c-ab0ab1750023
+            name: key21
+            required: true
+            type: string
+            default: ''
+          default: ''
+      nodeParam:
+        code: |-
+          def main(input):
+              ret = {
+                  "key0": input + "hello",
+                  "key1": ["hello", "world"],
+                  "key2": {"key21": "hi"}
+              }
+              return ret
+        appId: 680ab54f
+        uid: 12a51cd1-ad29-4a36-9a5b-aa751b96031c
+        codeErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/pro-bucket/sparkBot/common/workflow/icon/codeIcon.png
+      description: Provides code development capability for developers, currently
+        only supports Python language. Allows parameters to be passed in using defined
+        variables, and the return statement is used to output the result of the function.
+      updatable: false
+  - id: question-answer::0547efcb-e215-446d-b5b9-859caed6aa0d
+    selected: false
+    width: 362
+    height: 196
+    position:
+      x: 581.5816355742103
+      y: 536.5099960315292
+    type: custom
+    data:
+      allowInputReference: true
+      allowOutputReference: true
+      label: Question and Answer Node_1
+      labelEdit: false
+      references: [
+        ]
+      status: success
+      nodeMeta:
+        aliasName: 问答节点
+        nodeType: 基础节点
+      inputs:
+      - id: 5edaaade-c185-4890-80cc-e166e930bf2f
+        name: input
+        nameErrMsg: ''
+        schema:
+          type: object
+          value:
+            type: ref
+            content:
+              id: f7037b7d-a603-4b95-949d-b5e586290c4b
+              nodeId: ifly-code::44b937f4-d6cb-476a-81b9-b6015a6e8cff
+              name: key2
+            contentErrMsg: ''
+        fileType: ''
+      outputs:
+      - id: 6f1ba0c4-523b-4f09-a4a7-56db0830fc27
+        name: query
+        nameErrMsg: ''
+        schema:
+          type: string
+          description: The question content of this node
+          default: ''
+        required: true
+      - id: e762e51e-6aad-4b96-87f4-7a6dac62e520
+        name: content
+        nameErrMsg: ''
+        schema:
+          type: string
+          description: User reply content
+          default: ''
+        required: true
+      nodeParam:
+        question: Which type of software would you like me to analyze? {(softwareType)}
+        timeout: 3
+        needReply: false
+        answerType: direct
+        directAnswer:
+          handleResponse: false
+          maxRetryCounts: 2
+        optionAnswer:
+        - id: option-one-of::9f458a73-e366-4a26-9f2e-40c5eaf6b924
+          name: A
+          type: 2
+          content: ''
+          content_type: string
+        - id: option-one-of::f00a5e7a-22ca-4d71-92b6-c950ae7ade01
+          name: B
+          type: 2
+          content: ''
+          content_type: string
+        - id: option-one-of::854a375e-7628-4a9e-b499-a0f11ef3511c
+          name: default
+          type: 1
+          content: ''
+          content_type: string
+        url: wss://spark-api.xf-yun.com/v4.0/chat
+        domain: 4.0Ultra
+        appId: 680ab54f
+        maxTokens: 2048
+        temperature: 0.5
+        topK: 4
+        model: spark
+        llmId: 110
+        serviceId: bm4
+        uid: 12a51cd1-ad29-4a36-9a5b-aa751b96031c
+        questionErrMsg: ''
+        llmIdErrMsg: ''
+      icon: https://oss-beijing-m8.openstorage.cn/SparkBot/test4/answer-new2.png
+      description: This node supports asking questions to the user, receiving user
+        responses, and outputting the reply content and extracted information
+      updatable: false
+  edges:
+  - source: node-start::d61b0f71-87ee-475e-93ba-f1607f0ce783
+    target: ifly-code::44b937f4-d6cb-476a-81b9-b6015a6e8cff
+    type: customEdge
+    id: reactflow__edge-node-start::d61b0f71-87ee-475e-93ba-f1607f0ce783-ifly-code::44b937f4-d6cb-476a-81b9-b6015a6e8cff
+    markerEnd:
+      type: arrow
+      color: '#6356EA'
+    data:
+      edgeType: curve
+  - source: ifly-code::44b937f4-d6cb-476a-81b9-b6015a6e8cff
+    target: question-answer::0547efcb-e215-446d-b5b9-859caed6aa0d
+    type: customEdge
+    id: reactflow__edge-ifly-code::44b937f4-d6cb-476a-81b9-b6015a6e8cff-question-answer::0547efcb-e215-446d-b5b9-859caed6aa0d
+    markerEnd:
+      type: arrow
+      color: '#6356EA'
+    data:
+      edgeType: curve
+  - source: question-answer::0547efcb-e215-446d-b5b9-859caed6aa0d
+    target: node-end::cda617af-551e-462e-b3b8-3bb9a041bf88
+    type: customEdge
+    id: reactflow__edge-question-answer::0547efcb-e215-446d-b5b9-859caed6aa0d-node-end::cda617af-551e-462e-b3b8-3bb9a041bf88
+    markerEnd:
+      type: arrow
+      color: '#6356EA'
+    data:
+      edgeType: curve
